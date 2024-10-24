@@ -32,7 +32,7 @@
 
         .form-container {
             margin: 0 auto;
-            background-color: white;
+            background-color: ececec;
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
@@ -59,33 +59,19 @@
 </head>
 
 <ocaParchis:layout pageName="Clan">
-<body>
+<body style="background-color:#ececec;">
     <div class="container form-container">
         <h1>Crear nueva API Key</h1>
-        <form action="${pageContext.request.contextPath}/apikey/nueva" method="POST" class="form-horizontal">
+        <form action="/apikey/nueva" method="POST" class="form-horizontal">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <div class="form-group">
-                <label for="apiKey">API Key:</label>
-                <input type="text" class="form-control" id="apiKey" name="apiKey" required>
+                <label for="apiKeyCode">API Key:</label>
+                <input type="text" class="form-control" id="apiKeyCode" name="apiKeyCode" required>
             </div>
-
-            <div class="form-group">
-                <label for="description">Descripción:</label>
-                <input type="text" class="form-control" id="description" name="description" required>
-            </div>
-
-            <div class="form-group">
-                <label for="active">¿Activa?:</label>
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="active" name="active">
-                    <label class="form-check-label" for="active">Sí</label>
-                </div>
-            </div>
-
             <div class="form-group">
                 <label for="ip">IP:</label>
                 <input type="text" class="form-control" id="ip" name="ip" required>
             </div>
-
             <button type="submit" class="btn btn-danger btn-block">Guardar</button>
         </form>
     </div>

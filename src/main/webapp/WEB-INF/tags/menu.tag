@@ -50,6 +50,12 @@
 					<span>Clan</span>
 				</ocaParchis:menuItem>
 
+				<ocaParchis:menuItem active="${name eq 'Apikey'}" url="/apikey"
+					title="Apikey">
+					<span class=" 	glyphicon glyphicon-lock" aria-hidden="true"></span>
+					<span>Apikey</span>
+				</ocaParchis:menuItem>
+
 			</ul>
 
 		</div>

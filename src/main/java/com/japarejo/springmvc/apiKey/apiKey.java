@@ -19,13 +19,7 @@ public class apiKey {
 	private Integer id;
 
     @Column
-    String apiKey;
-
-    @Column
-    String descripcion;
-
-    @Column
-    Boolean activa;
+    String apiKeyCode;
  
     @Column
     String ip;

@@ -14,7 +14,7 @@
 						<script src="/webjars/jquery/jquery.min.js"></script>
 						<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 
-						<ocaParchis:layout pageName="Clan">
+						<ocaParchis:layout pageName="Apikey">
 							<title>CocAPIC</title>
 					</head>
 
@@ -22,7 +22,7 @@
     <div class="container">
         <h1 class="text-center">Listado de API Keys</h1>
         <div class="text-right">
-            <a href="/apikeys/nueva" class="btn btn-primary">Crear nueva API Key</a>
+            <a href="/apikey/nueva" class="btn btn-danger">Crear nueva API Key</a>
         </div>
         <br>
         <table class="table table-bordered table-striped">
@@ -30,8 +30,6 @@
                 <tr>
                     <th>ID</th>
                     <th>API Key</th>
-                    <th>Descripcion</th>
-                    <th>Activa</th>
                     <th>IP</th>
                     <th>Acciones</th>
                 </tr>
@@ -42,18 +40,7 @@
                     <c:forEach var="apiKey" items="${apiKeys}">
                         <tr>
                             <td><c:out value="${apiKey.id}" /></td>
-                            <td><c:out value="${apiKey.apiKey}" /></td>
-                            <td><c:out value="${apiKey.descripcion}" /></td>
-                            <td>
-                                <c:choose>
-                                    <c:when test="${apiKey.activa}">
-                                        <span class="label label-success">Activa</span>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <span class="label label-danger">Inactiva</span>
-                                    </c:otherwise>
-                                </c:choose>
-                            </td>
+                            <td><c:out value="${apiKey.apiKeyCode}" /></td>
                             <td><c:out value="${apiKey.ip}" /></td>
                             <td>
                                 <a href="/apikey/eliminar/${apiKey.id}" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro que deseas eliminar esta API Key?');">Eliminar</a>
