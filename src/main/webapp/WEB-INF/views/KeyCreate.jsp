@@ -58,7 +58,7 @@
     </style>
 </head>
 
-<ocaParchis:layout pageName="Clan">
+<ocaParchis:layout pageName="Apikey">
 <body style="background-color:#ececec;">
     <div class="container form-container">
         <h1>Crear nueva API Key</h1>

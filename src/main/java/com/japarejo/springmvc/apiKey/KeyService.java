@@ -14,7 +14,7 @@ public class KeyService {
     private KeyRepository keyRepo;
 
     public apiKey keyByIp(String ip){
-        return keyRepo.findByIp(ip).get();
+        return keyRepo.findByIp(ip).orElse(null);
     }
 
     public List<apiKey> findAll(){

@@ -18,7 +18,7 @@ public class apiKey {
 	@Column(unique=true, nullable=false)
 	private Integer id;
 
-    @Column
+    @Column(length = 5000)
     String apiKeyCode;
  
     @Column

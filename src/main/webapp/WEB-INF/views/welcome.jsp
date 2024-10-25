@@ -18,6 +18,8 @@
 	</head>
 	<body style="background-color:#ececec">
 		<h1 style="font-family:monospace" align="middle">&nbsp;CocApiC</h1>
+		<p>Public IP: ${globalConfigIp}</p>
+		<p>APICOde: ${apiKeyCode}</p>
 	</body>
 </ocaParchis:layout>
 </html>

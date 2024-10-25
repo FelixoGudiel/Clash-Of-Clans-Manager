@@ -61,7 +61,7 @@ public class KeyController {
 
     @GetMapping("/eliminar/{id}")
     public String eliminarKey(@PathVariable("id") Integer id) {
-        keyService.deleteById(id); // Elimina la API Key por su ID
-        return "redirect:/apikey"; // Redirige nuevamente a la lista de API Keys
+        keyService.deleteById(id);
+        return "redirect:/apikey"; 
     }
 }
