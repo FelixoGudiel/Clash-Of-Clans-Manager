@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,16 +20,35 @@ import java.net.URL;
 import com.japarejo.springmvc.gamer.Gamer;
 import com.japarejo.springmvc.gamerRecord.GamerRecord;
 import com.japarejo.springmvc.gamerRecord.GamerRecordRepository;
-
+import com.japarejo.springmvc.apiKey.KeyRepository;
+import com.japarejo.springmvc.configuration.GlobalConfig;
 
 @Service
 public class AsaltoService {
 
+    private GlobalConfig globalConfig;
+
+    @Autowired
+    private KeyRepository keyRepo;
     @Autowired
     private AsaltoRepository asaltoRepo;
     @Autowired
     private GamerRecordRepository gamerRecordRepo;
-    private String apiKey= "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImQ1NWYzM2RiLWY3MTUtNDg1MC1iMDM5LWViOTUyZjhiNWRmMiIsImlhdCI6MTcwMDA1MDUyNywic3ViIjoiZGV2ZWxvcGVyL2IyYWJiMGZhLTBmZjAtNjdjMC0xZjIxLTBjNWIzMjNhNjczMiIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjgxLjM2LjE4NC4xOSJdLCJ0eXBlIjoiY2xpZW50In1dfQ.vvtOQYzRCP-C1iy1mccnldnoyaw-YeoNOKSm5LhqSta5iOdssbFP0fzTJD6PkR0b5EzJEAdNEkJ6yoWfjlQpyw";    public String asaltoAPI() throws IOException {
+
+    private String apiKey;
+
+    @Autowired
+    public AsaltoService(GlobalConfig globalConfig) {
+        this.globalConfig = globalConfig;
+    }
+
+    @PostConstruct
+    private void init() {
+        apiKey = keyRepo.findByIp(globalConfig.getGlobalVariable())
+                        .orElseThrow(() -> new RuntimeException("API key not found"))
+                        .getApiKeyCode();
+    }
+    public String asaltoAPI() throws IOException {
         try {
             URL url = new URL(
                     "https://api.clashofclans.com/v1/clans/%232LPQV9YP0/capitalraidseasons?authorization=Bearer:"+apiKey);

@@ -25,7 +25,7 @@ public class WelcomeController {
 
         // Add the global IP variable to the ModelAndView
         result.addObject("globalConfigIp", globalConfig.getGlobalVariable());
-        result.addObject("apiKeyCode", keyService.keyByIp(globalConfig.getGlobalVariable()));
+        result.addObject("apiKeyCode", keyService.keyByIp(globalConfig.getGlobalVariable()).getApiKeyCode());
         return result;
     }
 }

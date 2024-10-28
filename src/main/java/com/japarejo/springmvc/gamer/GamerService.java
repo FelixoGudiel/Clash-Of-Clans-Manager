@@ -9,18 +9,41 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.japarejo.springmvc.apiKey.KeyRepository;
+import com.japarejo.springmvc.configuration.GlobalConfig;
 
 
 @Service
 public class GamerService {
 
+    private GlobalConfig globalConfig;
+
+    @Autowired
+    private KeyRepository keyRepo;
     @Autowired
     private GamerRepository gamerRepo;
-    private String apiKey= "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImQ1NWYzM2RiLWY3MTUtNDg1MC1iMDM5LWViOTUyZjhiNWRmMiIsImlhdCI6MTcwMDA1MDUyNywic3ViIjoiZGV2ZWxvcGVyL2IyYWJiMGZhLTBmZjAtNjdjMC0xZjIxLTBjNWIzMjNhNjczMiIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjgxLjM2LjE4NC4xOSJdLCJ0eXBlIjoiY2xpZW50In1dfQ.vvtOQYzRCP-C1iy1mccnldnoyaw-YeoNOKSm5LhqSta5iOdssbFP0fzTJD6PkR0b5EzJEAdNEkJ6yoWfjlQpyw";
-    public void gamerAPI(String playerTag) throws IOException {
 
+    private String apiKey;
+
+    @Autowired
+    public GamerService(GlobalConfig globalConfig) {
+        this.globalConfig = globalConfig;
+    }
+
+    @PostConstruct
+    private void init() {
+        apiKey = keyRepo.findByIp(globalConfig.getGlobalVariable())
+                        .orElseThrow(() -> new RuntimeException("API key not found"))
+                        .getApiKeyCode();
+    }
+
+    public void gamerAPI(String playerTag) throws IOException {
+        
         try {
             String urlPlayerTag = playerTag.replace("#", "%23");
             URL url = new URL("https://api.clashofclans.com/v1/players/" + urlPlayerTag
