@@ -18,6 +18,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import com.japarejo.springmvc.gamer.Gamer;
+import com.japarejo.springmvc.apiKey.apiKey;
 import com.japarejo.springmvc.gamerRecord.GamerRecord;
 import com.japarejo.springmvc.gamerRecord.GamerRecordRepository;
 import com.japarejo.springmvc.apiKey.KeyRepository;
@@ -44,9 +45,9 @@ public class AsaltoService {
 
     @PostConstruct
     private void init() {
-        apiKey = keyRepo.findByIp(globalConfig.getGlobalVariable())
-                        .orElseThrow(() -> new RuntimeException("API key not found"))
-                        .getApiKeyCode();
+        apiKey apiKeyObj = keyRepo.findByIp(globalConfig.getGlobalVariable())
+                        .orElse(null);
+        if (apiKeyObj != null){ apiKey=apiKeyObj.getApiKeyCode();} else {apiKey=null;}
     }
     public String asaltoAPI() throws IOException {
         try {

@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.japarejo.springmvc.apiKey.KeyService;
+import com.japarejo.springmvc.apiKey.apiKey;
 import com.japarejo.springmvc.configuration.GlobalConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -23,9 +24,14 @@ public class WelcomeController {
     public ModelAndView welcome() {
         ModelAndView result = new ModelAndView("welcome");
 
-        // Add the global IP variable to the ModelAndView
+        apiKey foundKey = keyService.keyByIp(globalConfig.getGlobalVariable());
         result.addObject("globalConfigIp", globalConfig.getGlobalVariable());
-        result.addObject("apiKeyCode", keyService.keyByIp(globalConfig.getGlobalVariable()).getApiKeyCode());
+        if (foundKey!=null){
+            result.addObject("apiKeyCode", foundKey.getApiKeyCode());
+        }
+        else {
+            result.addObject("apiKeyCode", null);
+        }
         return result;
     }
 }

@@ -8,8 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.japarejo.springmvc.apiKey.KeyService;
 import com.japarejo.springmvc.asalto.AsaltoService;
+import com.japarejo.springmvc.configuration.GlobalConfig;
 import com.japarejo.springmvc.gamerRecord.GamerRecordService;
 
 @Controller
@@ -22,16 +25,37 @@ public class GamerController {
     GamerService gamerService;
     @Autowired
     GamerRecordService gamerRecordService;
+    @Autowired
+    KeyService keyService;
 
     public static final String CLAN = "Clan";
     public static final String PROMOTION = "Promotion";
+    private GlobalConfig globalConfig;
 
-    @GetMapping()
-    public ModelAndView clan() throws IOException {
-        ModelAndView result = new ModelAndView(CLAN);
-        result.addObject("members", gamerService.clanMembers());
-        return result;
+    @Autowired
+    public GamerController(GlobalConfig globalConfig) {
+        this.globalConfig = globalConfig;
     }
+
+
+    @GetMapping
+    public ModelAndView clan(RedirectAttributes redirectAttributes) throws IOException {
+        ModelAndView result;
+
+        // Verificar si la llave API es nula
+        if (keyService.keyByIp(globalConfig.getGlobalVariable()) == null) {
+        // Añadir el mensaje a RedirectAttributes para que se mantenga en el redireccionamiento
+         redirectAttributes.addFlashAttribute("message", "No hay llave API activa");
+        // Redirigir a la ruta principal "/"
+        return new ModelAndView("redirect:/");
+    }
+
+    // Si hay una llave API activa, cargar la vista del clan
+    result = new ModelAndView("CLAN");
+    result.addObject("members", gamerService.clanMembers());
+    return result;
+}
+
 
     @GetMapping("/update")
     public ModelAndView clanUpdate() throws IOException {

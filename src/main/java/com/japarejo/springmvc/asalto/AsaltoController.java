@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.japarejo.springmvc.apiKey.KeyService;
+import com.japarejo.springmvc.configuration.GlobalConfig;
 import com.japarejo.springmvc.gamer.Gamer;
 import com.japarejo.springmvc.gamer.GamerService;
 import com.japarejo.springmvc.gamerRecord.GamerRecord;
@@ -28,6 +30,15 @@ public class AsaltoController {
     GamerService gamerService;
     @Autowired
     GamerRecordService gamerRecordService;
+    @Autowired
+    KeyService keyService;
+
+    private GlobalConfig globalConfig;
+
+    @Autowired
+    public AsaltoController(GlobalConfig globalConfig) {
+        this.globalConfig = globalConfig;
+    }
 
     public static final String ASALTO_INFO = "AsaltoInfo";
     public static final String ASALTO_ANALISIS = "Analisis";
@@ -35,6 +46,11 @@ public class AsaltoController {
     @GetMapping("/addAsalto")
     public ModelAndView añadirUltimoAsalto() throws IOException {
         ModelAndView result = new ModelAndView("redirect:/asaltos");
+
+        if (keyService.keyByIp(globalConfig.getGlobalVariable())== null) {
+            result.addObject("message", "No hay llave API activa");
+            return result;
+        }
 
         String raw = asaltoService.asaltoAPI();
         String rawTrimmed = asaltoService.recorteBasico(raw);

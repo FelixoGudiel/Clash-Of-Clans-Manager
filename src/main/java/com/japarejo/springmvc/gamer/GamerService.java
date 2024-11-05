@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.japarejo.springmvc.apiKey.KeyRepository;
+import com.japarejo.springmvc.apiKey.apiKey;
 import com.japarejo.springmvc.configuration.GlobalConfig;
 
 
@@ -37,9 +38,9 @@ public class GamerService {
 
     @PostConstruct
     private void init() {
-        apiKey = keyRepo.findByIp(globalConfig.getGlobalVariable())
-                        .orElseThrow(() -> new RuntimeException("API key not found"))
-                        .getApiKeyCode();
+        apiKey apiKeyObj = keyRepo.findByIp(globalConfig.getGlobalVariable())
+                        .orElse(null);
+        if (apiKeyObj != null){ apiKey=apiKeyObj.getApiKeyCode();} else {apiKey=null;}
     }
 
     public void gamerAPI(String playerTag) throws IOException {
