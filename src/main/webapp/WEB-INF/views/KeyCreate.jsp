@@ -70,7 +70,8 @@
             </div>
             <div class="form-group">
                 <label for="ip">IP:</label>
-                <input type="text" class="form-control" id="ip" name="ip" required>
+                <input type="text" class="form-control" id="ip" name="ip" required 
+                       value="${apiKey.ip != null ? apiKey.ip : ''}">
             </div>
             <button type="submit" class="btn btn-danger btn-block">Guardar</button>
         </form>

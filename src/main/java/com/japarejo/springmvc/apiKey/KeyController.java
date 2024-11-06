@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.japarejo.springmvc.asalto.Asalto;
+import com.japarejo.springmvc.configuration.GlobalConfig;
 import com.japarejo.springmvc.gamer.Gamer;
 import com.japarejo.springmvc.gamer.GamerService;
 import com.japarejo.springmvc.gamerRecord.GamerRecord;
@@ -36,9 +37,19 @@ public class KeyController {
 
     public static final String KEY_CREATE_VIEW = "KeyCreate";
 
+    private GlobalConfig globalConfig;
+
+    @Autowired
+    public KeyController(GlobalConfig globalConfig) {
+        this.globalConfig = globalConfig;
+    }
+
     @GetMapping()
     public ModelAndView infoKeys() {
         ModelAndView result = new ModelAndView(KEY_INFO);
+        if (keyService.keyByIp(globalConfig.getGlobalVariable())== null){
+            result.addObject("message", "No hay una API Key para la IP actual");
+        }
         result.addObject("apiKeys", keyService.findAll());
         return result;
     }
@@ -46,7 +57,11 @@ public class KeyController {
     @GetMapping("/nueva")
     public ModelAndView nuevaKey() {
         ModelAndView result = new ModelAndView(KEY_CREATE_VIEW);
-        result.addObject("apiKey", new apiKey());  
+        apiKey nueva = new apiKey();
+        if (keyService.keyByIp(globalConfig.getGlobalVariable())== null){
+            nueva.ip = globalConfig.getGlobalVariable();
+        }
+        result.addObject("apiKey", nueva);  
         return result;
     }
 

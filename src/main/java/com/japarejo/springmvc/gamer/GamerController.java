@@ -42,15 +42,11 @@ public class GamerController {
     public ModelAndView clan(RedirectAttributes redirectAttributes) throws IOException {
         ModelAndView result;
 
-        // Verificar si la llave API es nula
         if (keyService.keyByIp(globalConfig.getGlobalVariable()) == null) {
-        // Añadir el mensaje a RedirectAttributes para que se mantenga en el redireccionamiento
          redirectAttributes.addFlashAttribute("message", "No hay llave API activa");
-        // Redirigir a la ruta principal "/"
         return new ModelAndView("redirect:/");
     }
 
-    // Si hay una llave API activa, cargar la vista del clan
     result = new ModelAndView("CLAN");
     result.addObject("members", gamerService.clanMembers());
     return result;
