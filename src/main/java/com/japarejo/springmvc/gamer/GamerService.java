@@ -36,14 +36,11 @@ public class GamerService {
         this.globalConfig = globalConfig;
     }
 
-    @PostConstruct
-    private void init() {
-        apiKey apiKeyObj = keyRepo.findByIp(globalConfig.getGlobalVariable())
-                        .orElse(null);
-        if (apiKeyObj != null){ apiKey=apiKeyObj.getApiKeyCode();} else {apiKey=null;}
-    }
-
+    
     public void gamerAPI(String playerTag) throws IOException {
+        apiKey apiKeyObj = keyRepo.findByIp(globalConfig.getGlobalVariable())
+    .orElse(null);
+    if (apiKeyObj != null){ apiKey=apiKeyObj.getApiKeyCode();} else {apiKey=null;}
         
         try {
             String urlPlayerTag = playerTag.replace("#", "%23");
@@ -103,6 +100,9 @@ public class GamerService {
     }
 
     public void clanAPI() throws IOException {
+        apiKey apiKeyObj = keyRepo.findByIp(globalConfig.getGlobalVariable())
+    .orElse(null);
+    if (apiKeyObj != null){ apiKey=apiKeyObj.getApiKeyCode();} else {apiKey=null;}
         try {
 
             URL url = new URL(
@@ -134,6 +134,9 @@ public class GamerService {
     }
 
     public List<Gamer> clanMembers() throws IOException {
+        apiKey apiKeyObj = keyRepo.findByIp(globalConfig.getGlobalVariable())
+    .orElse(null);
+    if (apiKeyObj != null){ apiKey=apiKeyObj.getApiKeyCode();} else {apiKey=null;}
         try {
 
             URL url = new URL(

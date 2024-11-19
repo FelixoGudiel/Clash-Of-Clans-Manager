@@ -47,7 +47,7 @@ public class GamerController {
         return new ModelAndView("redirect:/");
     }
 
-    result = new ModelAndView("CLAN");
+    result = new ModelAndView(CLAN);
     result.addObject("members", gamerService.clanMembers());
     return result;
 }

@@ -43,14 +43,13 @@ public class AsaltoService {
         this.globalConfig = globalConfig;
     }
 
-    @PostConstruct
-    private void init() {
+    public String asaltoAPI() throws IOException {
+        
         apiKey apiKeyObj = keyRepo.findByIp(globalConfig.getGlobalVariable())
                         .orElse(null);
         if (apiKeyObj != null){ apiKey=apiKeyObj.getApiKeyCode();} else {apiKey=null;}
-    }
-    public String asaltoAPI() throws IOException {
         try {
+
             URL url = new URL(
                     "https://api.clashofclans.com/v1/clans/%232LPQV9YP0/capitalraidseasons?authorization=Bearer:"+apiKey);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -72,6 +71,10 @@ public class AsaltoService {
     }
 
     public Integer copasAPI() throws IOException {
+        
+        apiKey apiKeyObj = keyRepo.findByIp(globalConfig.getGlobalVariable())
+                        .orElse(null);
+        if (apiKeyObj != null){ apiKey=apiKeyObj.getApiKeyCode();} else {apiKey=null;}
         try {
             URL url = new URL(
                     "https://api.clashofclans.com/v1/clans/%232LPQV9YP0?authorization=Bearer:"+apiKey);
