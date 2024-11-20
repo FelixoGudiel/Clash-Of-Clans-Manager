@@ -32,7 +32,8 @@
 								<div style=" float: left; padding: 10px">
 									<table class="table table-striped">
 										<tr>
-											<th style="width:175px">Nombre</th>
+											<th style="width:115px">Nombre</th>
+											<th>Asaltos</th>
 											<th>Donado</th>
 											<th>Etiqueta</th>
 										</tr>
@@ -41,6 +42,9 @@
 												<tr>
 													<td>
 														<c:out value="${miembro.nombre}"></c:out>
+													</td>
+													<td>
+														<c:out value="${listNumAsaltos[status.index]}"></c:out>
 													</td>
 													<td>
 														<c:out value="${miembro.donado}"></c:out>
@@ -56,15 +60,19 @@
 								<div style=" float: left; padding: 10px">
 									<table class="table table-striped">
 										<tr>
-											<th style="width:175px">Nombre</th>
+											<th style="width:115px">Nombre</th>
+											<th>Asaltos</th>
 											<th>Donado</th>
 											<th>Etiqueta</th>
 										</tr>
 										<c:forEach items="${members}" var="miembro" varStatus="status">
-											<c:if test="${status.index>=17 && status.index<34}">
+											<c:if test="${status.index>17 && status.index<35}">
 												<tr>
 													<td>
 														<c:out value="${miembro.nombre}"></c:out>
+													</td>
+													<td>
+														<c:out value="${listNumAsaltos[status.index]}"></c:out>
 													</td>
 													<td>
 														<c:out value="${miembro.donado}"></c:out>
@@ -80,15 +88,19 @@
 								<div style=" float: left; padding: 10px;">
 									<table class="table table-striped">
 										<tr>
-											<th style="width:175px">Nombre</th>
+											<th style="width:115px">Nombre</th>
+											<th>Asaltos</th>
 											<th>Donado</th>
 											<th>Etiqueta</th>
 										</tr>
 										<c:forEach items="${members}" var="miembro" varStatus="status">
-											<c:if test="${status.index>=34}">
+											<c:if test="${status.index>34}">
 												<tr>
 													<td>
 														<c:out value="${miembro.nombre}"></c:out>
+													</td>
+													<td>
+														<c:out value="${listNumAsaltos[status.index]}"></c:out>
 													</td>
 													<td>
 														<c:out value="${miembro.donado}"></c:out>

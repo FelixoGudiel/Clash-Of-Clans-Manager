@@ -1,6 +1,7 @@
 package com.japarejo.springmvc.gamer;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,8 @@ import com.japarejo.springmvc.apiKey.KeyService;
 import com.japarejo.springmvc.asalto.AsaltoService;
 import com.japarejo.springmvc.configuration.GlobalConfig;
 import com.japarejo.springmvc.gamerRecord.GamerRecordService;
+
+import antlr.collections.List;
 
 @Controller
 @RequestMapping("/clan")
@@ -49,6 +52,11 @@ public class GamerController {
 
     result = new ModelAndView(CLAN);
     result.addObject("members", gamerService.clanMembers());
+    ArrayList<Integer> listNumAsaltos = new ArrayList<>();
+    for (Gamer member : gamerService.clanMembers()){
+        listNumAsaltos.add(gamerService.numAsaltos(member));
+    }
+    result.addObject("listNumAsaltos", listNumAsaltos);
     return result;
 }
 

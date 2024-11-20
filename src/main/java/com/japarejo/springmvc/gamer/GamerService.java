@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import com.japarejo.springmvc.apiKey.KeyRepository;
 import com.japarejo.springmvc.apiKey.apiKey;
 import com.japarejo.springmvc.configuration.GlobalConfig;
+import com.japarejo.springmvc.gamerRecord.GamerRecordRepository;
 
 
 @Service
@@ -28,6 +29,8 @@ public class GamerService {
     private KeyRepository keyRepo;
     @Autowired
     private GamerRepository gamerRepo;
+    @Autowired
+    private GamerRecordRepository gamerRecordRepo;
 
     private String apiKey;
 
@@ -169,6 +172,9 @@ public class GamerService {
         }
     }
 
+    public Integer numAsaltos(Gamer gamer){
+        return gamerRecordRepo.contarAsaltos(gamer);
+    }
     public List<Gamer> findAll() {
         return gamerRepo.findAll();
     }
